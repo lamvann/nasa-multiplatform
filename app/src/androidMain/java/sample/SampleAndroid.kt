@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         api.info {
             GlobalScope.launch(Dispatchers.Main) {
-                findViewById<TextView>(R.id.main_text).text = it
+                findViewById<TextView>(R.id.main_text).text = "date: ${it.date}\n\nexplanation: ${it.explanation}"
             }
         }
     }

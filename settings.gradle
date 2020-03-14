@@ -1,3 +1,4 @@
 rootProject.name = 'Multiplarform'
+enableFeaturePreview('GRADLE_METADATA')
 
 include ':app'

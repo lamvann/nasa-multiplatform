@@ -7,16 +7,16 @@ import kotlin.coroutines.CoroutineContext
 
 actual open class BaseViewModel actual constructor() {
     private val viewModelJob = SupervisorJob()
-    private val viewModelScope: CoroutineScope = CoroutineScope(IosMainDispatcher + viewModelJob)
+    private val coroutineScope: CoroutineScope = CoroutineScope(IosMainDispatcher + viewModelJob)
 
-    actual val coroutineScope: CoroutineScope = viewModelScope
+    actual val viewModelScope: CoroutineScope = coroutineScope
 
     protected actual open fun onCleared() {
         viewModelJob.cancelChildren()
     }
 
     // could be private object?
-    object IosMainDispatcher : CoroutineDispatcher() {
+    private object IosMainDispatcher : CoroutineDispatcher() {
         override fun dispatch(context: CoroutineContext, block: Runnable) {
             dispatch_async(dispatch_get_main_queue()) { block.run() }
         }

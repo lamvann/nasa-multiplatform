@@ -1,16 +1,20 @@
 import UIKit
 import app // K/N
 
-class ViewController: UIViewController {
+class SplashViewController: UIViewController {
+    
+    private var splashViewModel: SplashViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        NasaApi().get {        
-//            print($0)
-//        }
-        SampleIosKt.getNasaData { (data: Item) in
+        initViewModel()
+        splashViewModel.getPlanetaryData{ (data: PlanetaryResponse) in
             self.label.text = "date: " + data.date + "\n\n" + "explanation: " + data.explanation + "\n"
         }
+    }
+    
+    private func initViewModel() {
+        splashViewModel = SplashViewModel()
     }
 
     override func didReceiveMemoryWarning() {

@@ -1,4 +1,4 @@
-package sample
+package data
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

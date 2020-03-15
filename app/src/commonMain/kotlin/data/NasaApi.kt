@@ -1,5 +1,6 @@
-package sample
+package data
 
+import data.response.PlanetaryResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -13,16 +14,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 
-@Serializable
-data class Item(
-    val date: String,
-    val explanation: String,
-    @SerialName("media_type") val mediaType: String,
-    @SerialName("service_version") val serviceVersion: String,
-    val title: String,
-    val url: String
-)
-
 @UnstableDefault
 @ExperimentalStdlibApi
 class NasaApi {
@@ -32,7 +23,7 @@ class NasaApi {
         }
     }
 
-    suspend fun info(callback: (Item) -> Unit) {
+    suspend fun planetary(callback: (PlanetaryResponse) -> Unit) {
         val rawResponse = client.get<HttpResponse> {
             url {
                 protocol = HTTPS
@@ -41,7 +32,7 @@ class NasaApi {
                 parameter("api_key", "9kPuiHvzHiIHbrc13fbGnOdkoGk2aphtwmHbyjLC")
             }
         }
-        val parsedResult = Json.parse(Item.serializer(), rawResponse.readText())
+        val parsedResult = Json.parse(PlanetaryResponse.serializer(), rawResponse.readText())
         callback(parsedResult)
     }
 }

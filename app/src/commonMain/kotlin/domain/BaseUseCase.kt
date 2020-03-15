@@ -6,13 +6,13 @@ import kotlinx.coroutines.launch
 import util.Either
 import util.Failure
 
-abstract class BaseUseCase<out Success: Any, in Params> {
-    abstract suspend fun run(params: Params): Either<Failure, Success>
+abstract class BaseUseCase<out Entity: Any, in Params> {
+    abstract suspend fun run(params: Params): Either<Failure, Entity>
 
-    suspend operator fun invoke(
+    operator fun invoke(
         scope: CoroutineScope,
         params: Params,
-        onResult: (Either<Failure, Success>) -> Unit = {}
+        onResult: (Either<Failure, Entity>) -> Unit = {}
     ) {
         val background = scope.async { run(params) }
         scope.launch { onResult(background.await()) }

@@ -9,13 +9,10 @@ import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import io.ktor.http.URLProtocol.Companion.HTTPS
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 
 @UnstableDefault
-@ExperimentalStdlibApi
 class NasaApi {
     private val client = HttpClient(httpEngine) {
         install(JsonFeature) {
@@ -23,7 +20,7 @@ class NasaApi {
         }
     }
 
-    suspend fun planetary(callback: (PlanetaryResponse) -> Unit) {
+    suspend fun planetary(): PlanetaryResponse {
         val rawResponse = client.get<HttpResponse> {
             url {
                 protocol = HTTPS
@@ -32,7 +29,6 @@ class NasaApi {
                 parameter("api_key", "9kPuiHvzHiIHbrc13fbGnOdkoGk2aphtwmHbyjLC")
             }
         }
-        val parsedResult = Json.parse(PlanetaryResponse.serializer(), rawResponse.readText())
-        callback(parsedResult)
+        return Json.parse(PlanetaryResponse.serializer(), rawResponse.readText())
     }
 }

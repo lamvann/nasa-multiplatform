@@ -97,6 +97,10 @@ kotlin {
 
                 // coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+
+                implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
+                implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01"
+                implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
             }
         }
         androidTest {
@@ -115,7 +119,11 @@ kotlin {
                 implementation "io.ktor:ktor-client-serialization-iosx64:${ktor}"
 
                 // coroutines
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines"
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines") {
+                    version {
+                        strictly '1.3.3-native-mt'
+                    }
+                }
             }
         }
         iosTest {

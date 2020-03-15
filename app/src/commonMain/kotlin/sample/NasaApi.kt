@@ -8,8 +8,6 @@ import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import io.ktor.http.URLProtocol.Companion.HTTPS
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UnstableDefault
@@ -19,7 +17,6 @@ import kotlinx.serialization.json.Json
 data class Item(
     val date: String,
     val explanation: String,
-    val hdurl: String,
     @SerialName("media_type") val mediaType: String,
     @SerialName("service_version") val serviceVersion: String,
     val title: String,
@@ -35,18 +32,16 @@ class NasaApi {
         }
     }
 
-    fun info(callback: (Item) -> Unit) {
-        GlobalScope.launch {
-            val rawResponse = client.get<HttpResponse> {
-                url {
-                    protocol = HTTPS
-                    host = "api.nasa.gov"
-                    encodedPath = "planetary/apod"
-                    parameter("api_key", "9kPuiHvzHiIHbrc13fbGnOdkoGk2aphtwmHbyjLC")
-                }
+    suspend fun info(callback: (Item) -> Unit) {
+        val rawResponse = client.get<HttpResponse> {
+            url {
+                protocol = HTTPS
+                host = "api.nasa.gov"
+                encodedPath = "planetary/apod"
+                parameter("api_key", "9kPuiHvzHiIHbrc13fbGnOdkoGk2aphtwmHbyjLC")
             }
-            val parsedResult = Json.parse(Item.serializer(), rawResponse.readText())
-            callback(parsedResult)
         }
+        val parsedResult = Json.parse(Item.serializer(), rawResponse.readText())
+        callback(parsedResult)
     }
 }

@@ -1,17 +1,16 @@
 import UIKit
-import app
+import app // K/N
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NasaApi().info { (result: Item) in
-//            DispatchQueue.main.async {
-//                self.label.text = result.explanation
-//            }
+//        NasaApi().get {        
+//            print($0)
 //        }
-        
-        label.text = Proxy().proxyHello()
+        SampleIosKt.getNasaData { (data: Item) in
+            self.label.text = "date: " + data.date + "\n\n" + "explanation: " + data.explanation + "\n"
+        }
     }
 
     override func didReceiveMemoryWarning() {

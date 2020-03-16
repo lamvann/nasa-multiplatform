@@ -14,6 +14,8 @@ import kotlinx.serialization.json.Json
 
 @UnstableDefault
 class NasaApi {
+
+    // HTTP client could be injected
     private val client = HttpClient(httpEngine) {
         install(JsonFeature) {
             serializer = KotlinxSerializer()

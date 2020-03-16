@@ -1,6 +1,7 @@
-package data
+package data.source
 
-import data.response.PlanetaryResponse
+import data.httpEngine
+import data.response.PicOfTheDayResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -15,22 +16,24 @@ import kotlinx.serialization.json.Json
 @UnstableDefault
 class NasaApi {
 
-    // HTTP client could be injected
+    // TODO HTTP client could be injected
     private val client = HttpClient(httpEngine) {
         install(JsonFeature) {
             serializer = KotlinxSerializer()
         }
     }
 
-    suspend fun planetary(): PlanetaryResponse {
+    suspend fun picOfTheDay(date: String = ""): PicOfTheDayResponse {
         val rawResponse = client.get<HttpResponse> {
             url {
                 protocol = HTTPS
                 host = "api.nasa.gov"
                 encodedPath = "planetary/apod"
                 parameter("api_key", "9kPuiHvzHiIHbrc13fbGnOdkoGk2aphtwmHbyjLC")
+                parameter("date", date)
+                parameter("hd", true)
             }
         }
-        return Json.parse(PlanetaryResponse.serializer(), rawResponse.readText())
+        return Json.parse(PicOfTheDayResponse.serializer(), rawResponse.readText())
     }
 }

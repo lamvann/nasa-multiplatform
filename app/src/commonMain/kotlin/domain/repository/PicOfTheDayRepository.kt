@@ -1,7 +1,7 @@
 package domain.repository
 
-import domain.entity.PlanetarySummary
+import domain.entity.PicOfTheDay
 
-interface PlanetaryRepository {
-    suspend fun fetchPlanetaryData(): PlanetarySummary
+interface PicOfTheDayRepository {
+    suspend fun fetchPlanetaryData(date: String = ""): PicOfTheDay
 }

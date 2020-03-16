@@ -1,5 +1,6 @@
 import UIKit
 import app // K/N
+import MapleBacon
 
 class SplashViewController: UIViewController {
     
@@ -8,8 +9,14 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViewModel()
-        splashViewModel.getPlanetaryData{ (data: PlanetaryResponse) in
-            self.label.text = "date: " + data.date + "\n\n" + "explanation: " + data.explanation + "\n"
+        // TODO observe instead of passing closure
+        splashViewModel.getPlanetaryData{ (data: PicOfTheDay) in
+            
+            self.background.setImage(with: URL(string: data.hdurl))
+            self.background.contentMode = UIViewContentMode.scaleAspectFill
+            self.background.layer.masksToBounds = true
+            
+            self.label.text = data.title
         }
     }
     
@@ -22,4 +29,5 @@ class SplashViewController: UIViewController {
     }
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var background: UIImageView!
 }

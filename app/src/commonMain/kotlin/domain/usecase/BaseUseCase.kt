@@ -1,4 +1,4 @@
-package domain
+package domain.usecase
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -6,6 +6,10 @@ import kotlinx.coroutines.launch
 import util.Either
 import util.Failure
 
+/**
+ * Executes a UseCase following CLEAN Architecture asynchronously
+ *
+ */
 abstract class BaseUseCase<out Entity: Any, in Params> {
     abstract suspend fun run(params: Params): Either<Failure, Entity>
 

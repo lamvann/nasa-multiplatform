@@ -1,7 +1,7 @@
 package presentation.splash
 
-import data.response.PlanetaryResponse
-import domain.GetPlanetaryData
+import domain.entity.PicOfTheDay
+import domain.usecase.GetPlanetaryData
 import kotlinx.serialization.UnstableDefault
 import presentation.BaseViewModel
 
@@ -11,7 +11,7 @@ class SplashViewModel : BaseViewModel() {
 
     @UnstableDefault
     @ExperimentalStdlibApi
-    fun getPlanetaryData(lambda: (PlanetaryResponse) -> Unit) {
+    fun getPlanetaryData(lambda: (PicOfTheDay) -> Unit) {
         launchUseCase(planetaryData, Unit, lambda)
     }
 }

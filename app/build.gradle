@@ -46,6 +46,16 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
     androidTestImplementation 'androidx.test:runner:1.1.0'
 }
 
@@ -75,6 +85,9 @@ kotlin {
 
                 // coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
+                
+                // klock
+//                implementation "com.soywiz.korlibs.klock:klock:$klock"
             }
         }
         commonTest {
@@ -97,10 +110,6 @@ kotlin {
 
                 // coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
-
-                implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
-                implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01"
-                implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
             }
         }
         androidTest {

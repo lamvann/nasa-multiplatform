@@ -1,10 +1,11 @@
 package domain.entity
 
-data class PlanetarySummary(
-    val date: String,
+import data.mapper.MediaType
+
+data class PicOfTheDay(
     val explanation: String,
-    val mediaType: String,
-    val serviceVersion: String,
+    val mediaType: MediaType,
+    val hdurl: String,
     val title: String,
     val url: String
 )

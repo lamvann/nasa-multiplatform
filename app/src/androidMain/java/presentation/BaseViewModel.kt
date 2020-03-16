@@ -2,7 +2,7 @@ package presentation
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import domain.BaseUseCase
+import domain.usecase.BaseUseCase
 import androidx.lifecycle.viewModelScope as androidViewModelScope
 import kotlinx.coroutines.CoroutineScope
 import util.Failure

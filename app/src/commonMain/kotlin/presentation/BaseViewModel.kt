@@ -1,6 +1,6 @@
 package presentation
 
-import domain.BaseUseCase
+import domain.usecase.BaseUseCase
 import kotlinx.coroutines.CoroutineScope
 import util.Failure
 

@@ -1,27 +1,20 @@
 package presentation.splash
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
-import com.bumptech.glide.Glide
 import kotlinx.serialization.UnstableDefault
 import presentation.BaseFragment
+import presentation.bindingadapter.imageUrl
 import sample.R
+import sample.databinding.FragmentSplashBinding
 
-@ExperimentalStdlibApi
-class SplashActivity : BaseFragment<SplashViewModel>(R.layout.fragment_splash) {
-
-    @SuppressLint("SetTextI18n")
-    @UnstableDefault
+@UnstableDefault
+class SplashActivity : BaseFragment<SplashViewModel, FragmentSplashBinding>(R.layout.fragment_splash) {
+    // TODO figure out how to observe data from ViewModel without [LiveData]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.getPlanetaryData {
-            val backgroundImage = findViewById<ImageView>(R.id.iv_background)
-            Glide.with(this).load(it.hdurl).into(backgroundImage)
-
-            findViewById<TextView>(R.id.main_text).text = it.title
+        viewModel.getPicOfTheDay {
+            binding.ivBackground.imageUrl(it.hdurl)
+            binding.mainText.text = it.title
         }
     }
 }

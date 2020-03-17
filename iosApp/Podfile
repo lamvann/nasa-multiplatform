@@ -15,7 +15,6 @@ target 'iosApp' do
 
   # Pods for iosApp
   pod "MapleBacon"
-  pod 'Kingfisher', '~> 5.0'
 
   target 'iosAppTests' do
     inherit! :search_paths

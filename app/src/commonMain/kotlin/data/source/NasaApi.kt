@@ -2,6 +2,7 @@ package data.source
 
 import data.httpEngine
 import data.response.PicOfTheDayResponse
+import di.injector
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -12,16 +13,12 @@ import io.ktor.client.statement.readText
 import io.ktor.http.URLProtocol.Companion.HTTPS
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import org.kodein.di.erased.instance
 
 @UnstableDefault
 class NasaApi {
 
-    // TODO HTTP client could be injected
-    private val client = HttpClient(httpEngine) {
-        install(JsonFeature) {
-            serializer = KotlinxSerializer()
-        }
-    }
+    private val client: HttpClient by injector.instance()
 
     suspend fun picOfTheDay(date: String = ""): PicOfTheDayResponse {
         val rawResponse = client.get<HttpResponse> {

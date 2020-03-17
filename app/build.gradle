@@ -1,6 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.multiplatform'
     id 'kotlinx-serialization'
+    id 'org.jetbrains.kotlin.kapt'
 }
 repositories {
     google()
@@ -37,6 +38,14 @@ android {
         sourceCompatibility = "8"
     }
 
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
     }
@@ -51,6 +60,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01"
 
     // glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
@@ -88,6 +98,10 @@ kotlin {
                 
                 // klock
 //                implementation "com.soywiz.korlibs.klock:klock:$klock"
+                
+                // KodeIn-DI
+                implementation "org.kodein.di:kodein-di-core:$kodein"
+                implementation "org.kodein.di:kodein-di-erased:$kodein"
             }
         }
         commonTest {

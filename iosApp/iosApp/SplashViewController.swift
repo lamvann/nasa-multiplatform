@@ -10,8 +10,7 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
         initViewModel()
         // TODO observe instead of passing closure
-        splashViewModel.getPlanetaryData{ (data: PicOfTheDay) in
-            
+        splashViewModel.getPicOfTheDay{ (data: PicOfTheDay) in
             self.background.setImage(with: URL(string: data.hdurl))
             self.background.contentMode = UIViewContentMode.scaleAspectFill
             self.background.layer.masksToBounds = true

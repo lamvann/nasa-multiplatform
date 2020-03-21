@@ -4,14 +4,14 @@ import domain.usecase.BaseUseCase
 import kotlinx.coroutines.CoroutineScope
 import util.Failure
 
-expect open class BaseViewModel() {
+expect open class SharedViewModel() {
     val viewModelScope: CoroutineScope
     protected open fun onCleared() // must be have protected modifier, otherwise can't override. Why?
 
-    fun <E : Any, P> launchUseCase(
-        useCase: BaseUseCase<E, P>,
-        params: P,
-        onSuccess: (E) -> Unit
+    fun <Entity : Any, Params> launchUseCase(
+        useCase: BaseUseCase<Entity, Params>,
+        params: Params,
+        onSuccess: (Entity) -> Unit
     )
 
     open fun onError(failure: Failure)

@@ -9,7 +9,7 @@ import util.onFailure
 import util.onSuccess
 import kotlin.coroutines.CoroutineContext
 
-actual open class BaseViewModel actual constructor() {
+actual open class SharedViewModel actual constructor() {
     private val viewModelJob = SupervisorJob()
     private val coroutineScope: CoroutineScope = CoroutineScope(IosMainDispatcher + viewModelJob)
 
@@ -19,10 +19,10 @@ actual open class BaseViewModel actual constructor() {
         viewModelJob.cancelChildren()
     }
 
-    actual fun <E : Any, P> launchUseCase(
-        useCase: BaseUseCase<E, P>,
-        params: P,
-        onSuccess: (E) -> Unit
+    actual fun <Entity : Any, Params> launchUseCase(
+        useCase: BaseUseCase<Entity, Params>,
+        params: Params,
+        onSuccess: (Entity) -> Unit
     ) {
         useCase.invoke(viewModelScope, params) { either ->
             either
@@ -36,7 +36,6 @@ actual open class BaseViewModel actual constructor() {
 
     }
 
-    // could be private object?
     private object IosMainDispatcher : CoroutineDispatcher() {
         override fun dispatch(context: CoroutineContext, block: Runnable) {
             dispatch_async(dispatch_get_main_queue()) { block.run() }

@@ -9,16 +9,16 @@ import util.Failure
 import util.onFailure
 import util.onSuccess
 
-actual open class BaseViewModel actual constructor(): ViewModel() {
+actual open class SharedViewModel actual constructor(): ViewModel() {
     actual val viewModelScope: CoroutineScope = androidViewModelScope
     actual override fun onCleared() {
         super.onCleared()
     }
 
-    actual fun <E : Any, P> launchUseCase(
-        useCase: BaseUseCase<E, P>,
-        params: P,
-        onSuccess: (E) -> Unit
+    actual fun <Entity : Any, Params> launchUseCase(
+        useCase: BaseUseCase<Entity, Params>,
+        params: Params,
+        onSuccess: (Entity) -> Unit
     ) {
         useCase.invoke(viewModelScope, params) { either ->
             either
@@ -30,4 +30,8 @@ actual open class BaseViewModel actual constructor(): ViewModel() {
     actual open fun onError(failure: Failure) {
         Log.d("ViewModel Failure", "Something bad happened $failure")
     }
+}
+
+abstract class BaseViewModel<UiStateType: Any> : SharedViewModel() {
+
 }
